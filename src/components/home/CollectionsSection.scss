@@ -1,0 +1,261 @@
+.collections-section {
+  padding: 80px 0;
+  background: #ffffff;
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 15px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b35, #ff8f65);
+      border-radius: 2px;
+    }
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0 auto 50px auto;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .collections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+
+    .collection-card {
+      position: relative;
+      border-radius: 15px;
+      overflow: hidden;
+      height: 280px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+
+        .collection-image img {
+          transform: scale(1.1);
+        }
+
+        .collection-overlay {
+          background: rgba(0, 0, 0, 0.7);
+        }
+
+        .explore-btn {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .collection-link {
+        display: block;
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .collection-image {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .collection-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.3s ease;
+        }
+
+        .collection-content {
+          text-align: center;
+          color: #ffffff;
+          padding: 20px;
+
+          h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+          }
+
+          p {
+            font-size: 1rem;
+            margin: 0 0 20px 0;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+          }
+
+          .explore-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #ff6b35;
+            color: #ffffff;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+
+            &:hover {
+              background: #e55a2e;
+              box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+            }
+          }
+        }
+      }
+
+      // Efeito especial para algumas coleções
+      &:nth-child(1) .collection-overlay {
+        background: linear-gradient(135deg, rgba(255, 107, 53, 0.8), rgba(0, 0, 0, 0.4));
+      }
+
+      &:nth-child(2) .collection-overlay {
+        background: linear-gradient(135deg, rgba(233, 30, 99, 0.8), rgba(0, 0, 0, 0.4));
+      }
+
+      &:nth-child(3) .collection-overlay {
+        background: linear-gradient(135deg, rgba(111, 66, 193, 0.8), rgba(0, 0, 0, 0.4));
+      }
+
+      &:nth-child(4) .collection-overlay {
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.8), rgba(0, 0, 0, 0.4));
+      }
+
+      &:nth-child(5) .collection-overlay {
+        background: linear-gradient(135deg, rgba(23, 162, 184, 0.8), rgba(0, 0, 0, 0.4));
+      }
+
+      &:nth-child(6) .collection-overlay {
+        background: linear-gradient(135deg, rgba(220, 53, 69, 0.8), rgba(0, 0, 0, 0.4));
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 1024px) {
+  .collections-section {
+    padding: 60px 0;
+
+    .collections-grid {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+
+      .collection-card {
+        height: 250px;
+
+        .collection-image .collection-content {
+          h3 {
+            font-size: 1.5rem;
+          }
+
+          p {
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .collections-section {
+    padding: 40px 0;
+
+    .section-title {
+      font-size: 2rem;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+
+    .collections-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+
+      .collection-card {
+        height: 220px;
+
+        .collection-image .collection-content {
+          padding: 15px;
+
+          h3 {
+            font-size: 1.3rem;
+          }
+
+          p {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+          }
+
+          .explore-btn {
+            padding: 10px 20px;
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .collections-section {
+    .section-title {
+      font-size: 1.8rem;
+    }
+
+    .collections-grid {
+      .collection-card {
+        height: 200px;
+
+        .collection-image .collection-content {
+          h3 {
+            font-size: 1.2rem;
+          }
+
+          p {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}

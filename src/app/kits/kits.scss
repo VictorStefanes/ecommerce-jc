@@ -1,0 +1,53 @@
+.kits-page {
+  .kits-info {
+    padding: 3rem 0;
+    
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+      
+      .info-card {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem;
+        border-radius: 12px;
+        text-align: center;
+        border: 1px solid #dee2e6;
+        
+        h3 {
+          font-size: 1.3rem;
+          font-weight: 600;
+          margin-bottom: 1rem;
+          color: #333;
+        }
+        
+        p {
+          color: #666;
+          line-height: 1.5;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .kits-page {
+    .kits-info {
+      padding: 2rem 0;
+      
+      .info-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        
+        .info-card {
+          padding: 1.5rem;
+          
+          h3 {
+            font-size: 1.1rem;
+          }
+        }
+      }
+    }
+  }
+}

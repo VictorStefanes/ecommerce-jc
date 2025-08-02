@@ -1,0 +1,328 @@
+// Variáveis - Paleta JC Atacados
+$primary-color: #DC2626; // Vermelho principal (baseado na logo JC)
+$secondary-color: #fff;
+$accent-color: #DC2626; // Vermelho de destaque
+$text-color: #1F2937; // Cinza escuro
+$border-color: #E5E7EB;
+$hover-color: #FEF2F2; // Vermelho muito claro para hover
+$black-color: #000; // Preto para contrastes
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: $secondary-color;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  // Banner Superior
+  &-banner {
+    background: $black-color;
+    color: $secondary-color;
+    padding: 8px 0;
+    font-size: 14px;
+    text-align: center;
+
+    .separator {
+      margin: 0 15px;
+      opacity: 0.7;
+    }
+
+    span {
+      font-weight: 500;
+    }
+  }
+
+  // Navbar Principal
+  .navbar {
+    padding: 15px 0;
+
+    &-content {
+      @include flex-between;
+      gap: 40px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+
+      .logo-circle {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(45deg, $primary-color 0%, #B91C1C 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 3px solid #991B1B;
+        box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        position: relative;
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          border-radius: 50%;
+          background: linear-gradient(45deg, #FCD34D, #F59E0B, #DC2626, #991B1B);
+          z-index: -1;
+        }
+
+        span {
+          color: $secondary-color;
+          font-weight: 900;
+          font-size: 18px;
+          letter-spacing: 1px;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 900;
+        color: $primary-color;
+        margin: 0;
+        letter-spacing: 2px;
+        text-shadow: 0 1px 2px rgba(220, 38, 38, 0.1);
+      }
+    }
+
+    .main-menu {
+      display: flex;
+      gap: 35px;
+      flex: 1;
+      justify-content: center;
+
+      .menu-item {
+        position: relative;
+        cursor: pointer;
+
+        > span {
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: 1px;
+          color: $text-color;
+          padding: 10px 0;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+
+        // Dropdown
+        &.dropdown {
+          .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: $secondary-color;
+            border: 1px solid $border-color;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            min-width: 800px;
+            padding: 30px;
+            display: none; /* Escondido por padrão */
+            z-index: 1001;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transform: translateX(-50%) translateY(-10px);
+
+            .dropdown-section {
+              h4 {
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: $black-color;
+                margin: 0 0 15px 0;
+                padding-bottom: 8px;
+                border-bottom: 2px solid $primary-color;
+              }
+
+              a {
+                display: block;
+                color: $text-color;
+                text-decoration: none;
+                font-size: 14px;
+                padding: 8px 0;
+                transition: all 0.3s ease;
+                border-left: 3px solid transparent;
+                padding-left: 10px;
+
+                &:hover {
+                  color: $primary-color;
+                  border-left-color: $primary-color;
+                  background: rgba($primary-color, 0.05);
+                  transform: translateX(5px);
+                }
+              }
+            }
+          }
+
+          /* Mostrar dropdown no hover com animação */
+          &:hover .dropdown-content {
+            display: grid !important;
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+          }
+        }
+      }
+    }
+
+    .user-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+
+      .action-btn {
+        @include flex-center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        position: relative;
+
+        &:hover {
+          background: $hover-color;
+          transform: translateY(-2px);
+        }
+
+        svg {
+          color: $text-color;
+        }
+      }
+
+      .cart-btn {
+        .cart-count {
+          position: absolute;
+          top: 5px;
+          right: 5px;
+          background: $primary-color;
+          color: $secondary-color;
+          border-radius: 50%;
+          font-size: 12px;
+          font-weight: 600;
+          min-width: 18px;
+          height: 18px;
+          @include flex-center;
+        }
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 1024px) {
+  .header {
+    .navbar {
+      .main-menu {
+        gap: 25px;
+
+        .menu-item {
+          .dropdown-content {
+            min-width: 600px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    &-banner {
+      font-size: 12px;
+      padding: 6px 0;
+
+      .separator {
+        margin: 0 10px;
+      }
+    }
+
+    .navbar {
+      padding: 10px 0;
+
+      &-content {
+        gap: 20px;
+      }
+
+      .logo h1 {
+        font-size: 24px;
+      }
+
+      .main-menu {
+        display: none; /* Em mobile, usar menu hamburger */
+      }
+
+      .user-actions {
+        gap: 15px;
+
+        .action-btn {
+          padding: 8px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    .container {
+      padding: 0 15px;
+    }
+
+    &-banner {
+      span:nth-child(2) {
+        display: none; /* Esconder separador em telas muito pequenas */
+      }
+      span:nth-child(3) {
+        display: none; /* Esconder segundo texto em telas muito pequenas */
+      }
+    }
+
+    .navbar {
+      .logo h1 {
+        font-size: 20px;
+      }
+
+      .user-actions {
+        gap: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,317 @@
+// Estilos específicos da página Home
+.home {
+  min-height: 100vh;
+
+  // Seção de Kits
+  .kits-section {
+    padding: 60px 0;
+    background: #ffffff;
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      color: #1a1a1a;
+      margin-bottom: 50px;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b35, #ff8f65);
+        border-radius: 2px;
+      }
+    }
+
+    .kits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+
+      .kit-card {
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+
+          img {
+            transform: scale(1.05);
+          }
+        }
+
+        img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+          transition: transform 0.3s ease;
+        }
+
+        .kit-info {
+          padding: 25px;
+
+          h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 15px 0;
+            line-height: 1.3;
+          }
+
+          .kit-price {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .original-price {
+              font-size: 0.9rem;
+              color: #999;
+              text-decoration: line-through;
+            }
+
+            .promo-price {
+              font-size: 1.3rem;
+              font-weight: 700;
+              color: #ff6b35;
+            }
+          }
+
+          .btn {
+            width: 100%;
+            padding: 12px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+
+  // Seção de Lançamentos
+  .launches-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #ffffff;
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 50px;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b35, #ff8f65);
+        border-radius: 2px;
+      }
+    }
+
+    .launches-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+
+      .launch-category {
+        text-align: center;
+
+        h3 {
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #ff6b35;
+          margin-bottom: 25px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        .launch-items {
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+
+          a {
+            color: #cccccc;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+
+            &::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, transparent, rgba(255, 107, 53, 0.2), transparent);
+              transition: left 0.5s ease;
+            }
+
+            &:hover {
+              color: #ffffff;
+              border-color: #ff6b35;
+              background: rgba(255, 107, 53, 0.1);
+              transform: translateX(5px);
+
+              &::before {
+                left: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 1024px) {
+  .home {
+    .kits-section {
+      padding: 50px 0;
+
+      .kits-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+    }
+
+    .launches-section {
+      padding: 50px 0;
+
+      .launches-categories {
+        gap: 30px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .home {
+    .kits-section {
+      padding: 40px 0;
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .kits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+
+        .kit-card {
+          img {
+            height: 200px;
+          }
+
+          .kit-info {
+            padding: 20px;
+
+            h3 {
+              font-size: 1.1rem;
+            }
+
+            .kit-price {
+              .promo-price {
+                font-size: 1.2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .launches-section {
+      padding: 40px 0;
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .launches-categories {
+        grid-template-columns: 1fr;
+        gap: 30px;
+
+        .launch-category {
+          h3 {
+            font-size: 1.5rem;
+          }
+
+          .launch-items {
+            a {
+              font-size: 1rem;
+              padding: 10px 15px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .home {
+    .kits-section {
+      .kits-grid {
+        grid-template-columns: 1fr;
+
+        .kit-card {
+          img {
+            height: 220px;
+          }
+
+          .kit-info {
+            padding: 18px;
+
+            h3 {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+
+    .launches-section {
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .launches-categories {
+        .launch-category {
+          h3 {
+            font-size: 1.3rem;
+          }
+
+          .launch-items {
+            a {
+              font-size: 0.95rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
