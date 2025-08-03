@@ -1,155 +1,169 @@
 "use client";
 
-import React from 'react';
-import { ShoppingCart, Eye } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import ProductCard from '../ProductCard/ProductCard';
+import { Product as ProductType, productAPI } from '../../utils/api';
 import './ProductGrid.scss';
 
-interface Product {
-  id: string;
-  title: string;
-  collection: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  badge?: string;
-}
-
 const ProductGrid: React.FC = () => {
-  // Mock data - em produção viria do Redux/API
-  const products: Product[] = [
-    {
-      id: '1',
-      title: 'Camiseta Dry Fit Masculina',
-      collection: 'Essential',
-      price: 49.90,
-      originalPrice: 69.90,
-      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop',
-      badge: 'PROMOÇÃO'
-    },
-    {
-      id: '2',
-      title: 'Legging Feminina Seamless',
-      collection: 'Seamless',
-      price: 89.90,
-      image: 'https://images.unsplash.com/photo-1506629905996-617f86ef4ba3?w=400&h=400&fit=crop',
-      badge: 'NOVO'
-    },
-    {
-      id: '3',
-      title: 'Camiseta Oversized Masculina',
-      collection: 'Oversized',
-      price: 59.90,
-      originalPrice: 79.90,
-      image: 'https://images.unsplash.com/photo-1581803118522-7b72a50f7e9f?w=400&h=400&fit=crop'
-    },
-    {
-      id: '4',
-      title: 'Conjunto Feminino Inverno',
-      collection: 'Inverno',
-      price: 149.90,
-      originalPrice: 199.90,
-      image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=400&fit=crop',
-      badge: 'DESTAQUE'
-    },
-    {
-      id: '5',
-      title: 'Bermuda Masculina Dry Fit',
-      collection: 'AeroFit',
-      price: 69.90,
-      image: 'https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=400&h=400&fit=crop'
-    },
-    {
-      id: '6',
-      title: 'Top Feminino Básico',
-      collection: 'Basic',
-      price: 39.90,
-      originalPrice: 54.90,
-      image: 'https://images.unsplash.com/photo-1506629905996-617f86ef4ba3?w=400&h=400&fit=crop',
-      badge: 'OFERTA'
-    },
-    {
-      id: '7',
-      title: 'Regata Masculina Apex',
-      collection: 'Apex',
-      price: 54.90,
-      image: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop'
-    },
-    {
-      id: '8',
-      title: 'Short Feminino ThermaFlow',
-      collection: 'ThermaFlow',
-      price: 79.90,
-      image: 'https://images.unsplash.com/photo-1594633313593-bab3825d0caf?w=400&h=400&fit=crop',
-      badge: 'LANÇAMENTO'
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, []);
+
+  const fetchFeaturedProducts = async () => {
+    try {
+      setLoading(true);
+      const data = await productAPI.getFeatured();
+      setProducts(data.products || []);
+    } catch (error) {
+      setError('Erro ao carregar produtos em destaque');
+      console.error('Erro ao carregar produtos:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
-
-  const formatPrice = (price: number) => {
-    return price.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    });
   };
 
-  const calculateDiscount = (originalPrice: number, currentPrice: number) => {
-    return Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
-  };
+  if (loading) {
+    return (
+      <div className="product-grid">
+        <div className="loading-grid">
+          {[...Array(8)].map((_, index) => (
+            <div key={index} className="product-skeleton">
+              <div className="skeleton-image"></div>
+              <div className="skeleton-content">
+                <div className="skeleton-title"></div>
+                <div className="skeleton-price"></div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <style jsx>{`
+          .loading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+          }
+
+          .product-skeleton {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            animation: pulse 1.5s ease-in-out infinite alternate;
+          }
+
+          .skeleton-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+          }
+
+          .skeleton-content {
+            padding: 1rem;
+          }
+
+          .skeleton-title {
+            height: 20px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+          }
+
+          .skeleton-price {
+            height: 16px;
+            width: 60%;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+            border-radius: 4px;
+          }
+
+          @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+          }
+
+          @keyframes pulse {
+            0% { opacity: 1; }
+            100% { opacity: 0.8; }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="product-grid-error">
+        <div className="error-content">
+          <h3>Ops! Algo deu errado</h3>
+          <p>{error}</p>
+          <button onClick={fetchFeaturedProducts} className="retry-btn">
+            Tentar Novamente
+          </button>
+        </div>
+        
+        <style jsx>{`
+          .product-grid-error {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            text-align: center;
+          }
+
+          .error-content h3 {
+            color: #dc3545;
+            margin-bottom: 1rem;
+          }
+
+          .error-content p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+          }
+
+          .retry-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.2s;
+          }
+
+          .retry-btn:hover {
+            background: #0056b3;
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return (
+      <div className="no-products">
+        <p>Nenhum produto encontrado.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="product-grid">
       {products.map((product) => (
-        <div key={product.id} className="product-card">
-          {/* Badge */}
-          {product.badge && (
-            <div className={`product-badge ${product.badge.toLowerCase()}`}>
-              {product.badge}
-            </div>
-          )}
-
-          {/* Discount Badge */}
-          {product.originalPrice && (
-            <div className="discount-badge">
-              -{calculateDiscount(product.originalPrice, product.price)}%
-            </div>
-          )}
-
-          {/* Product Image */}
-          <div className="product-image">
-            <img src={product.image} alt={product.title} />
-            <div className="product-overlay">
-              <button className="btn btn-primary quick-add">
-                <ShoppingCart size={16} />
-                Adicionar
-              </button>
-              <button className="btn btn-outline quick-view">
-                <Eye size={16} />
-                Ver
-              </button>
-            </div>
-          </div>
-
-          {/* Product Info */}
-          <div className="product-info">
-            <span className="product-collection">{product.collection}</span>
-            <h3 className="product-title">{product.title}</h3>
-            
-            <div className="product-pricing">
-              {product.originalPrice && (
-                <span className="original-price">
-                  {formatPrice(product.originalPrice)}
-                </span>
-              )}
-              <span className="current-price">
-                {formatPrice(product.price)}
-              </span>
-            </div>
-
-            <button className="btn btn-primary add-to-cart">
-              <ShoppingCart size={16} />
-              Adicionar ao Carrinho
-            </button>
-          </div>
-        </div>
+        <ProductCard 
+          key={product._id} 
+          product={product}
+        />
       ))}
     </div>
   );

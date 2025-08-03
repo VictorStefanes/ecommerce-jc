@@ -1,0 +1,138 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Legging Feminina High Waist Preta",
+      "price": 89.90,
+      "originalPrice": 129.90,
+      "images": ["/api/placeholder/300/400", "/api/placeholder/300/401"],
+      "colors": [
+        {"name": "Preto", "code": "#000000"},
+        {"name": "Cinza", "code": "#6b7280"},
+        {"name": "Azul", "code": "#1e40af"}
+      ],
+      "sizes": ["PP", "P", "M", "G", "GG"],
+      "rating": 4.9,
+      "reviews": 312,
+      "stock": 50,
+      "isNew": false,
+      "isLaunch": true,
+      "badge": "HIGH WAIST",
+      "category": "feminino",
+      "subcategory": "legging",
+      "collection": "Fitness",
+      "line": "Premium",
+      "description": "Legging feminina high waist com tecnologia dry fit para máximo conforto durante os treinos.",
+      "features": ["Dry Fit", "High Waist", "Compressão", "Anti-bacterial"],
+      "composition": "90% Poliamida, 10% Elastano"
+    },
+    {
+      "id": "2",
+      "name": "Camiseta Masculina Dry Fit Oversized",
+      "price": 79.90,
+      "originalPrice": 109.90,
+      "images": ["/api/placeholder/300/400", "/api/placeholder/300/401"],
+      "colors": [
+        {"name": "Preto", "code": "#000000"},
+        {"name": "Branco", "code": "#ffffff"},
+        {"name": "Azul Marinho", "code": "#1e3a8a"}
+      ],
+      "sizes": ["P", "M", "G", "GG", "XGG"],
+      "rating": 4.8,
+      "reviews": 187,
+      "stock": 75,
+      "isNew": false,
+      "isLaunch": false,
+      "badge": "02 POR R$139",
+      "category": "masculino",
+      "subcategory": "camisetas",
+      "collection": "Oversized",
+      "line": "Dry Fit",
+      "description": "Camiseta masculina oversized com tecnologia dry fit para treinos intensos.",
+      "features": ["Dry Fit", "Oversized", "Respirável", "Quick Dry"],
+      "composition": "100% Poliéster"
+    },
+    {
+      "id": "3",
+      "name": "Conjunto Feminino Seamless Nude",
+      "price": 189.90,
+      "originalPrice": 249.90,
+      "images": ["/api/placeholder/300/400", "/api/placeholder/300/401"],
+      "colors": [
+        {"name": "Nude", "code": "#d4af9a"},
+        {"name": "Rosa", "code": "#ec4899"},
+        {"name": "Branco", "code": "#ffffff"}
+      ],
+      "sizes": ["PP", "P", "M", "G"],
+      "rating": 4.9,
+      "reviews": 298,
+      "stock": 30,
+      "isNew": true,
+      "isLaunch": true,
+      "badge": "SEAMLESS",
+      "category": "feminino",
+      "subcategory": "conjuntos",
+      "collection": "Seamless",
+      "line": "Premium",
+      "description": "Conjunto feminino seamless para máximo conforto e performance.",
+      "features": ["Seamless", "Sem costura", "Compressão", "Modelador"],
+      "composition": "95% Nylon, 5% Elastano"
+    }
+  ],
+  "categories": [
+    {
+      "id": "masculino",
+      "name": "Masculino",
+      "subcategories": [
+        {"id": "camisetas", "name": "Camisetas", "count": 45},
+        {"id": "regatas", "name": "Regatas", "count": 32},
+        {"id": "shorts", "name": "Shorts", "count": 28},
+        {"id": "calcas", "name": "Calças", "count": 22},
+        {"id": "jaquetas", "name": "Jaquetas", "count": 15},
+        {"id": "conjuntos", "name": "Conjuntos", "count": 18},
+        {"id": "bermudas", "name": "Bermudas", "count": 25},
+        {"id": "acessorios", "name": "Acessórios", "count": 12}
+      ]
+    },
+    {
+      "id": "feminino",
+      "name": "Feminino",
+      "subcategories": [
+        {"id": "conjunto-inverno", "name": "Conjunto Inverno", "count": 35},
+        {"id": "camisetas-cropped-regatas", "name": "Camisetas/Cropped/Regatas", "count": 42},
+        {"id": "legging", "name": "Leggings", "count": 56},
+        {"id": "short", "name": "Shorts", "count": 38},
+        {"id": "top", "name": "Tops", "count": 29},
+        {"id": "conjuntos", "name": "Conjuntos", "count": 24},
+        {"id": "meia-feminina", "name": "Meias", "count": 16}
+      ]
+    }
+  ],
+  "collections": [
+    {"id": "oversized", "name": "Oversized", "featured": true},
+    {"id": "seamless", "name": "Seamless", "featured": true},
+    {"id": "dry-fit", "name": "Dry Fit", "featured": true},
+    {"id": "premium", "name": "Premium", "featured": false},
+    {"id": "fitness", "name": "Fitness", "featured": false}
+  ],
+  "promocodes": [
+    {
+      "id": "PRIMEIRA20",
+      "code": "PRIMEIRA20",
+      "discount": 20,
+      "type": "percentage",
+      "minValue": 150,
+      "active": true,
+      "description": "20% off na primeira compra"
+    },
+    {
+      "id": "FRETE198",
+      "code": "FRETE198",
+      "discount": 0,
+      "type": "free_shipping",
+      "minValue": 198,
+      "active": true,
+      "description": "Frete grátis acima de R$198"
+    }
+  ]
+}

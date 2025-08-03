@@ -1,8 +1,8 @@
-"use client";
-
 import React from 'react';
 import Banner from '../components/home/Banner';
-import ProductGrid from '../components/home/ProductGrid';
+import FeaturedCards from '../components/FeaturedCards';
+import PromotionCards from '../components/PromotionCards';
+import ProductGridNew from '../components/home/ProductGridNew';
 import PromoSection from '../components/home/PromoSection';
 import CollectionsSection from '../components/home/CollectionsSection';
 import ReviewsSection from '../components/home/ReviewsSection';
@@ -14,14 +14,20 @@ export default function HomePage() {
       {/* Banner/Carrossel Principal */}
       <Banner />
       
+      {/* Cards de Produtos em Promoção */}
+      <PromotionCards />
+      
+      {/* Cards de Produtos em Destaque */}
+      <FeaturedCards />
+      
       {/* Seção de Promoções */}
       <PromoSection />
       
       {/* Grid de Produtos em Destaque */}
       <section className="featured-products">
         <div className="container">
-          <h2 className="section-title">Produtos em Destaque</h2>
-          <ProductGrid />
+          <h2 className="section-title">PROMOÇÕES</h2>
+          <ProductGridNew />
         </div>
       </section>
       

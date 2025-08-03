@@ -1,111 +1,175 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Star, Filter, Heart, Eye, ShoppingBag } from 'lucide-react';
+import Link from 'next/link';
 import './styles.scss';
+
+interface Product {
+  _id: string;
+  name: string;
+  slug: string;
+  price: number;
+  originalPrice?: number;
+  images: Array<{ url: string; alt?: string }>;
+  shortDescription?: string;
+  badge?: string;
+  category: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
+  subcategory?: {
+    _id: string;
+    name: string;
+    slug: string;
+  };
+  colors?: Array<{ name: string; code: string }>;
+  sizes?: Array<{ name: string }>;
+  rating?: number;
+  reviews?: number;
+  isNew?: boolean;
+  isFeatured?: boolean;
+  isPromotion?: boolean;
+}
 
 const CamisetasPage: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [sortBy, setSortBy] = useState('relevance');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const products = [
-    {
-      id: 1,
-      name: "Camiseta Dry Fit Essential Preto",
-      price: 49.90,
-      originalPrice: 79.90,
-      image: "/api/placeholder/300/400",
-      colors: ["#000000", "#ffffff", "#1e40af", "#dc2626"],
-      sizes: ["P", "M", "G", "GG"],
-      rating: 4.9,
-      reviews: 127,
-      isNew: false,
-      isLaunch: false,
-      badge: "03 POR R$120",
-      category: "Essential",
-      line: ""
-    },
-    {
-      id: 2,
-      name: "Camiseta Dry Fit Essential Branco",
-      price: 49.90,
-      originalPrice: 79.90,
-      image: "/api/placeholder/300/400",
-      colors: ["#ffffff", "#000000", "#059669", "#7c3aed"],
-      sizes: ["P", "M", "G", "GG", "XGG"],
-      rating: 4.8,
-      reviews: 89,
-      isNew: false,
-      isLaunch: false,
-      badge: "03 POR R$120",
-      category: "Essential",
-      line: ""
-    },
-    {
-      id: 3,
-      name: "Camiseta Apex Performance Preto",
-      price: 79.90,
-      originalPrice: 119.90,
-      image: "/api/placeholder/300/400",
-      colors: ["#000000", "#1e293b", "#6b7280"],
-      sizes: ["M", "G", "GG"],
-      rating: 4.9,
-      reviews: 203,
-      isNew: false,
-      isLaunch: true,
-      badge: "",
-      category: "Linha Apex",
-      line: "Apex"
-    },
-    {
-      id: 4,
-      name: "Camiseta Dry Fit Sport Marinho",
-      price: 55.90,
-      originalPrice: 89.90,
-      image: "/api/placeholder/300/400",
-      colors: ["#1e40af", "#000000", "#374151"],
-      sizes: ["P", "M", "G", "GG"],
-      rating: 4.7,
-      reviews: 156,
-      isNew: false,
-      isLaunch: false,
-      badge: "03 POR R$135",
-      category: "Sport",
-      line: ""
-    },
-    {
-      id: 5,
-      name: "Camiseta Oversized Premium Cinza",
-      price: 69.90,
-      originalPrice: 99.90,
-      image: "/api/placeholder/300/400",
-      colors: ["#6b7280", "#000000", "#ffffff"],
-      sizes: ["P", "M", "G", "GG", "XGG"],
-      rating: 4.8,
-      reviews: 98,
-      isNew: false,
-      isLaunch: true,
-      badge: "",
-      category: "Oversized",
-      line: ""
-    },
-    {
-      id: 6,
-      name: "Camiseta Dry Fit Training Verde",
-      price: 52.90,
-      originalPrice: 82.90,
-      image: "/api/placeholder/300/400",
-      colors: ["#059669", "#000000", "#6b7280"],
-      sizes: ["M", "G", "GG", "XGG"],
-      rating: 4.6,
-      reviews: 234,
-      isNew: false,
-      isLaunch: false,
-      badge: "03 POR R$129",
-      category: "Training",
-      line: ""
+  useEffect(() => {
+    fetchProducts();
+  }, [sortBy]);
+
+  const fetchProducts = async () => {
+    try {
+      setLoading(true);
+      // Buscar produtos da categoria masculino usando a nova rota de filtros
+      const response = await fetch(`/api/products/filter?category=masculino&sort=${sortBy}`);
+      
+      if (!response.ok) {
+        throw new Error('Erro ao carregar produtos');
+      }
+
+      const data = await response.json();
+      setProducts(data.products || []);
+    } catch (error) {
+      console.error('Erro ao buscar produtos:', error);
+      setError('Erro ao carregar produtos. Tente novamente.');
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const getMainImage = (images: Array<{ url: string }>) => {
+    return images && images.length > 0 ? images[0].url : '/placeholder-product.jpg';
+  };
+
+  const formatPrice = (price: number) => {
+    return `R$ ${price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="alphaco-style-page">
+        <div className="container">
+          <h2>Carregando camisetas...</h2>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="alphaco-style-page">
+        <div className="container">
+          <h2>Erro ao carregar produtos</h2>
+          <p>{error}</p>
+          <button onClick={fetchProducts}>Tentar novamente</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="alphaco-style-page">
+      <section className="page-header">
+        <div className="container">
+          <div className="header-content">
+            <h1>Camisetas Masculinas</h1>
+            <p>Descubra nossa coleção exclusiva de camisetas masculinas de alta qualidade</p>
+            <div className="breadcrumb">
+              <Link href="/">Home</Link>
+              <span>/</span>
+              <Link href="/masculino">Masculino</Link>
+              <span>/</span>
+              <span>Camisetas</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="products-section">
+        <div className="container">
+          {products.length === 0 ? (
+            <div className="no-products">
+              <h3>Nenhum produto encontrado</h3>
+              <p>Não encontramos camisetas nesta categoria. Que tal explorar outras opções?</p>
+              <Link href="/masculino">Explorar Masculino</Link>
+            </div>
+          ) : (
+            <div className="products-grid">
+              {products.map((product) => {
+                const mainImage = getMainImage(product.images);
+                
+                return (
+                  <div key={product._id} className="product-card">
+                    <Link href={`/produtos/${product.category.slug}/${product.slug}`}>
+                      <div className="product-image">
+                        <img
+                          src={mainImage}
+                          alt={product.name}
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/placeholder-product.jpg';
+                          }}
+                        />
+                      </div>
+                    </Link>
+
+                    <div className="product-info">
+                      <h3 className="product-name">
+                        <Link href={`/produtos/${product.category.slug}/${product.slug}`}>
+                          {product.name}
+                        </Link>
+                      </h3>
+                      
+                      <div className="product-price">
+                        <span className="current-price">{formatPrice(product.price)}</span>
+                        {product.originalPrice && product.originalPrice > product.price && (
+                          <span className="original-price">{formatPrice(product.originalPrice)}</span>
+                        )}
+                      </div>
+
+                      <button className="add-to-cart-btn">
+                        <ShoppingBag size={16} />
+                        Adicionar ao Carrinho
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default CamisetasPage;
 
   return (
     <div className="alphaco-style-page">

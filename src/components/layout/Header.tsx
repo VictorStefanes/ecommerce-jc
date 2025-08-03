@@ -1,13 +1,20 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Search, ShoppingCart, User } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
+import SearchComponent from '../search/SearchComponent';
+import CartSidebar from '../cart/CartSidebar';
 import './Header.scss';
 
 const Header: React.FC = () => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { totalItems, toggleCart } = useCart();
+
   return (
-    <header className="header">
+    <>
+      <header className="header">
       {/* Banner Superior */}
       <div className="header-banner">
         <div className="container">
@@ -170,21 +177,37 @@ const Header: React.FC = () => {
 
             {/* Ações do usuário */}
             <div className="user-actions">
-              <button className="action-btn search-btn">
+              <button 
+                className="action-btn search-btn"
+                onClick={() => setIsSearchOpen(true)}
+              >
                 <Search size={20} />
               </button>
               <button className="action-btn user-btn">
                 <User size={20} />
               </button>
-              <button className="action-btn cart-btn">
+              <button 
+                className="action-btn cart-btn"
+                onClick={toggleCart}
+              >
                 <ShoppingCart size={20} />
-                <span className="cart-count">0</span>
+                {totalItems > 0 && (
+                  <span className="cart-count">{totalItems}</span>
+                )}
               </button>
             </div>
           </div>
         </div>
       </nav>
     </header>
+
+    {/* Components */}
+    <SearchComponent 
+      isOpen={isSearchOpen} 
+      onClose={() => setIsSearchOpen(false)} 
+    />
+    <CartSidebar />
+    </>
   );
 };
 
